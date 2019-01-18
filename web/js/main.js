@@ -3,8 +3,9 @@ var Ajax = {
         return JSON.stringify(arr);
     },
     simpleSendRequest: function(params) {
+        xhttp = new XMLHttpRequest();
         xhttp.open("POST", "index.php", true);
-        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send(params);
     },
     performRequest: function(arr) {
@@ -36,7 +37,7 @@ var CollectURLs = {
             var url2 = CollectURLs.getInputText("url2");
             if (CollectURLs.isURL(url1) && CollectURLs.isURL(url2)) {
                 console.log("test passed");
-                Ajax.performRequest([url1, url2]);
+                Ajax.performRequest("url1="+url1+"&url2="+url2);
             } else {
                 alert("Please check URL syntax before submitting compare request!");
             }
