@@ -19,11 +19,11 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
-  if ( isset($_POST['url1']) && isset($_POST['url2']) ) {
+  /*if ( isset($_POST['url1']) && isset($_POST['url2']) ) {
         $content = 'processing.twig';
-  } else {
+  } else {*/
         $content = 'index.twig';
-  }
+ // }
   return $app['twig']->render($content);
 });
 
