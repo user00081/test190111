@@ -13,4 +13,10 @@ class FetchContent
     {
 
     }
+    public function fetch( $path ) {
+        $handle = fopen( $path, "r" );
+        $contents = fread( $handle, filesize( $path ) );
+        fclose($handle);
+        return $contents;
+    }
 }
