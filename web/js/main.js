@@ -3,13 +3,15 @@ var Ajax = {
         return JSON.stringify(arr);
     },
     simpleSendRequest: function(params) {
-        xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "index.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var xhttp =  window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        xhttp.open("POST", "http://heroku.devel", false);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
         xhttp.send(params);
+        console.log("From Ajax.simpleSendRequest(): "+params);
+        console.log(xhttp);
     },
     performRequest: function(arr) {
-        var encodedParams = this.encodeJSONparams(arr)
+        var encodedParams = this.encodeJSONparams(arr);
         this.simpleSendRequest(encodedParams);
     }
 };
@@ -32,12 +34,13 @@ var CollectURLs = {
     },
     attachEvent: function(id) {
         var event = this.selectEvent();
-        document.getElementById(id).addEventListener(event, function(){
+        document.getElementById(id).addEventListener(event, function( e ){
             var url1 = CollectURLs.getInputText("url1");
             var url2 = CollectURLs.getInputText("url2");
             if (CollectURLs.isURL(url1) && CollectURLs.isURL(url2)) {
-                console.log("test passed");
+                e.preventDefault();
                 Ajax.performRequest("url1="+url1+"&url2="+url2);
+                console.log("From CollectURLS.attachEvent(): url1="+url1+"&url2="+url2);
             } else {
                 alert("Please check URL syntax before submitting compare request!");
             }
