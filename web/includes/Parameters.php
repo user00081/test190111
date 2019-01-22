@@ -6,7 +6,7 @@
  * Time: 10:23
  */
 
-class Listen
+class Parameters
 {
     protected $params;
     public function __construct()
@@ -24,8 +24,8 @@ class Listen
             $this->params->{ "$name" } = $_POST[$name];
     }
     public function saveAllPostVars() {
-        foreach ( $_POST as $var ) {
-            $this->savePostParam( $var );
+        foreach ( $_POST as $key=>$val ) {
+            $this->savePostParam( $key );
         }
     }
 }
