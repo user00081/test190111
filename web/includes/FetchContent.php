@@ -6,13 +6,17 @@
  * Time: 09:24
  */
 
-class FetchContent
+include_once 'Parameters.php';
+
+class FetchContent extends Parameters
 {
-    protected $contentAsText;
+    protected $parameters;
     public function __construct()
     {
-
+        $this->parameters = new Parameters();
+        $this->parameters->saveAllPostVars();
     }
+
     public function fetch( $path ) {
         $handle = fopen( $path, "r" );
         $contents = fread( $handle, filesize( $path ) );
