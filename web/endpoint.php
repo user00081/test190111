@@ -9,8 +9,10 @@ include_once 'includes/FetchContent.php';
 
 $fc = new FetchContent();
 $url1 = $fc->getParamByProperty( 'url1');
-$content = $fc->fetch($url1);
+var_dump($url1);
+$content = $fc->fetch( $url1 );
 
+var_dump(substr($content, 0, 100));
 
 
 

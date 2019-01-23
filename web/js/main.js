@@ -1,3 +1,13 @@
+var Printer = {
+    targetElementId: "",
+    setTargetElement: function ( elementId ) {
+        this.targetElementId = elementId;
+    },
+    displayContent: function( content ) {
+        document.getElementById( this.targetElementId ).innerHTML = content;
+    }
+};
+
 var Ajax = {
     encodePostParams: function(data) {
         return typeof data == 'string' ? data : Object.keys(data).map(
@@ -8,7 +18,10 @@ var Ajax = {
         var xhttp =  window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         xhttp.open("POST", "http://heroku.devel/endpoint.php", true);
         xhttp.onreadystatechange = function() {
-            if (xhttp.readyState>3 && xhttp.status==200) { console.log(xhttp.responseText); }
+            if (xhttp.readyState>3 && xhttp.status==200) {
+                Printer.setTargetElement("results");
+                Printer.displayContent(xhttp.responseText);
+            }
         };
         xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
