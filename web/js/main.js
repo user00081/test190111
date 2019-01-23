@@ -3,7 +3,14 @@ var Printer = {
     setTargetElement: function ( elementId ) {
         this.targetElementId = elementId;
     },
+    displayWaiting: function() {
+        document.getElementById(this.targetElementId).classList.add("waiting");
+    },
+    removeWaiting: function() {
+        document.getElementById(this.targetElementId).classList.remove("waiting");
+    },
     displayContent: function( content ) {
+        this.removeWaiting();
         document.getElementById( this.targetElementId ).innerHTML = content;
     }
 };
@@ -15,11 +22,12 @@ var Ajax = {
         ).join('&');
     },
     simpleSendRequest: function(params) {
+        Printer.setTargetElement("results");
+        Printer.displayWaiting();
         var xhttp =  window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         xhttp.open("POST", "http://heroku.devel/endpoint.php", true);
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState>3 && xhttp.status==200) {
-                Printer.setTargetElement("results");
                 Printer.displayContent(xhttp.responseText);
             }
         };

@@ -18,9 +18,10 @@ class FetchContent extends Parameters
     }
 
     public function fetch( $path ) {
-        $handle = fopen( $path, "r" );
+        return file_get_contents( $path );
+        /*$handle = fopen( $path, "r" );
         $contents = fread( $handle, filesize( $path ) );
         fclose($handle);
-        return $contents;
+        return $contents;*/
     }
 }
