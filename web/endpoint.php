@@ -3,21 +3,18 @@
 /*include_once 'includes/Parameters.php';
 
 $params = new Parameters();
-$params->saveAllPostVars();*/
+$params->saveAllPostVars();
+
+echo "url1 from Listen class: ".$params->getParamByProperty( 'url1' );
+echo "url2 from Listen class: ".$params->getParamByProperty( 'url2' );*/
+
 
 include_once 'includes/FetchContent.php';
 
 $fc = new FetchContent();
-$fc->saveAllPostVars();
 $url1 = $fc->getParamByProperty( 'url1');
 //var_dump($url1);
 $content = $fc->fetch( $url1 );
 
-var_dump(substr($content, 0, 100));
+var_dump(substr($content, 100, 100));
 
-
-
-/*
-echo "url1 from Listen class: ".$params->getParamByProperty( 'url1' );
-echo "url2 from Listen class: ".$params->getParamByProperty( 'url2' );
-*/

@@ -10,18 +10,13 @@ include_once 'Parameters.php';
 
 class FetchContent extends Parameters
 {
-    protected $parameters;
     public function __construct()
     {
-        $this->parameters = new Parameters();
-        $this->parameters->saveAllPostVars();
+        parent::__construct();
+        parent::saveAllPostVars();
     }
 
     public function fetch( $path ) {
         return file_get_contents( $path );
-        /*$handle = fopen( $path, "r" );
-        $contents = fread( $handle, filesize( $path ) );
-        fclose($handle);
-        return $contents;*/
     }
 }
