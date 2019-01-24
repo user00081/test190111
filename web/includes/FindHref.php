@@ -5,6 +5,7 @@
  * Date: 22.01.19
  * Time: 09:24
  */
+
 include_once 'FetchContent.php';
 
 class FindHref extends FetchContent
@@ -13,10 +14,19 @@ class FindHref extends FetchContent
     {
         parent::__construct();
     }
-    public function stringScanner( $string, $url ) {
+    public function attributeExtractor($url)
+    {
 
-    }
-    public function stringList() {
+        $html = parent::fetch($url);
+        $hrefs = array();
 
+        $dom = new DOMDocument();
+        @$dom->loadHTML($html, LIBXML_NOWARNING); //https://stackoverflow.com/questions/6090667/php-domdocument-errors-warnings-on-html5-tags/6090728
+
+        $tags = $dom->getElementsByTagName('a');
+        foreach ($tags as $tag) {
+            $hrefs[] = $tag->getAttribute('href');
+        }
+        return $hrefs;
     }
 }
