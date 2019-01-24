@@ -14,7 +14,7 @@ class FindHref extends FetchContent
     {
         parent::__construct();
     }
-    public function attributeExtractor($url)
+    public function attributeExtractor( $url )
     {
 
         $html = parent::fetch($url);

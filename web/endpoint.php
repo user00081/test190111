@@ -26,5 +26,7 @@ $href_list = $fh->attributeExtractor( $url );
 var_dump( $href_list );*/
 
 include_once 'includes/Compare.php';
-$comp = new Compare();
+$comp = new Compare( 'url1', 'url2');
+var_dump($comp->getArray1());
+var_dump($comp->getArray2());
 
