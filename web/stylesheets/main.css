@@ -9,6 +9,18 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'fontello';
+  src: url('../fonts/fontello/fontello.eot?31998184');
+  src: url('../fonts/fontello/fontello.eot?31998184#iefix') format('embedded-opentype'),
+  url('../fonts/fontello/fontello.woff?31998184') format('woff'),
+  url('../fonts/fontello/fontello.ttf?31998184') format('truetype'),
+  url('../fonts/fontello/fontello.svg?31998184#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -132,3 +144,34 @@ footer.footer {
 }
 .space-after { margin-bottom:1.618rem}
 .compare-btn { height:calc(7.368rem + 8px)}
+
+#results {
+  transition: height 0.3s ease-out;
+}
+.waiting {
+  display: block;
+  width: 100%;
+}
+.waiting:after {
+  content: '\e800';
+  display:block;
+  width:100%;
+  margin:4.854rem auto;
+  font-size:40px;
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-decoration: inherit;
+  text-align: center;
+  text-transform: none;
+  line-height: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
