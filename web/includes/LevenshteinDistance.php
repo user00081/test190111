@@ -24,16 +24,21 @@ c. The cell diagonally above and to the left plus the cost: d[i-1,j-1] + cost.
 */
 class LevenshteinDistance
 {
+    private $source_string;
+    private $target_string;
     private $source_length; //n
     private $target_length; //m
     private $matrix;
+    private $param_of_differencies;
+
     public function __construct( $source, $target ) {
         $this->source_length = strlen( $source );
         $this->target_length = strlen( $target );
         $this->matrix = array();
         $this->initMatrix();
+        $this->param_of_differencies = ["cost" => 0, "top" => 0, "left" => 0, "diag" => 0];
     }
-    public function initMatrix() {
+    private function initMatrix() {
         for ( $i=0; $i<$this->source_length; $i++) {
             $this->matrix[0][$i] = $i;
         }
@@ -41,5 +46,37 @@ class LevenshteinDistance
             $this->matrix[$j][0] = $j;
         }
     }
-
+    public function iterateMatrix( $m, $n ) {
+        for ($i=0; $i<$n; $i++) {
+            for ($j=0; $j<$m; $i++) {
+                $this->matrix[$i][$j] = $this->computeMinimum( $i, $j );
+            }
+        }
+    }
+    private function populateDiffVector( $m, $n ) {
+        $this->param_of_differencies["cost"] = $this->computeCost( $m, $n );
+        $this->param_of_differencies["top"] = $this->computeTop( $m, $n );
+        $this->param_of_differencies["left"] = $this->computeLeft( $m, $n );
+        $this->param_of_differencies["diag"] = $this->computeDiag( $m, $n, $this->param_of_differencies["cost"]);
+    }
+    private function getCharsByMatrixPosition( $m, $n ) {
+        return [ $this->source_string[$n], $this->target_string[$m] ];
+    }
+    private function computeCost( $m, $n ) {
+        $chars = $this->getCharsByMatrixPosition( $m, $n );
+        return ( $chars[0] === $chars[1] )?0:1;
+    }
+    private function computeTop( $m, $n ) {
+        return ( $this->matrix[ ($m - 1) ][ $n ] ) + 1;
+    }
+    private function computeLeft( $m, $n ) {
+        return ( $this->matrix[ $m ][ ( $n -1 ) ] ) + 1;
+    }
+    private function computeDiag( $m, $n, $const ) {
+        return ( $this->matrix[($m -1)][($n -1)] + $const);
+    }
+    private function computeMinimum( $m, $n ) {
+        $this->populateDiffVector( $m, $n );
+        return min( $this->param_of_differencies );
+    }
 }

@@ -6,9 +6,9 @@
  * Time: 09:23
  */
 
-include_once 'FindHref.php';
+include_once 'FindAttribute.php';
 
-class Compare extends FindHref
+class Compare extends FindAttribute
 {
     private $array_url1;
     private $array_url2;
@@ -16,6 +16,8 @@ class Compare extends FindHref
         parent::__construct();
         $url1 = parent::getParamByProperty( $var1 );
         $url2 = parent::getParamByProperty( $var2 );
+        parent::setTag( 'a' );
+        parent::setAttribute( 'href' );
         $this->array_url1 = parent::attributeExtractor( $url1 );
         $this->array_url2 = parent::attributeExtractor( $url2 );
     }

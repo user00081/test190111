@@ -15,7 +15,9 @@ class FetchContent extends Parameters
         parent::__construct();
         parent::saveAllPostVars();
     }
-
+    public function getHeaderInformations( $path ) {
+        return ( @get_headers($path, TRUE) !== false )?get_headers($path, TRUE):false;
+    }
     public function fetch( $path ) {
         return file_get_contents( $path );
     }
