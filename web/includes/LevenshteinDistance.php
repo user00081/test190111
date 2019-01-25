@@ -29,14 +29,12 @@ class LevenshteinDistance
     private $source_length; //n
     private $target_length; //m
     private $matrix;
-    private $param_of_differencies;
 
     public function __construct( $source, $target ) {
         $this->source_length = strlen( $source );
         $this->target_length = strlen( $target );
         $this->matrix = array();
         $this->initMatrix();
-        $this->param_of_differencies = ["cost" => 0, "top" => 0, "left" => 0, "diag" => 0];
     }
     private function initMatrix() {
         for ( $i=0; $i<$this->source_length; $i++) {
@@ -45,19 +43,28 @@ class LevenshteinDistance
         for ( $j=0; $j<$this->target_length; $j++ ) {
             $this->matrix[$j][0] = $j;
         }
+        $this->iterateMatrix( $this->source_length, $this->target_length );
     }
     public function iterateMatrix( $m, $n ) {
-        for ($i=0; $i<$n; $i++) {
-            for ($j=0; $j<$m; $i++) {
+        for ($i=1; $i<$n; $i++) {
+            for ($j=1; $j<$m; $i++) {
                 $this->matrix[$i][$j] = $this->computeMinimum( $i, $j );
             }
         }
     }
-    private function populateDiffVector( $m, $n ) {
-        $this->param_of_differencies["cost"] = $this->computeCost( $m, $n );
-        $this->param_of_differencies["top"] = $this->computeTop( $m, $n );
-        $this->param_of_differencies["left"] = $this->computeLeft( $m, $n );
-        $this->param_of_differencies["diag"] = $this->computeDiag( $m, $n, $this->param_of_differencies["cost"]);
+    public function getLevenshteinDifference() {
+       // return
+    }
+    /*
+     * array( cost, above current position, left of current position, above left of current position );
+     * */
+    private function computeImputParameters( $m, $n ) {
+        return [
+            $this->computeCost( $m, $n ),
+            $this->computeTop( $m, $n ),
+            $this->computeLeft( $m, $n ),
+            $this->computeDiag( $m, $n, $this->param_of_differencies["cost"])
+        ];
     }
     private function getCharsByMatrixPosition( $m, $n ) {
         return [ $this->source_string[$n], $this->target_string[$m] ];
@@ -76,7 +83,7 @@ class LevenshteinDistance
         return ( $this->matrix[($m -1)][($n -1)] + $const);
     }
     private function computeMinimum( $m, $n ) {
-        $this->populateDiffVector( $m, $n );
-        return min( $this->param_of_differencies );
+        $input_parameters = $this->computeImputParameters( $m, $n );
+        return min( $input_parameters );
     }
 }
