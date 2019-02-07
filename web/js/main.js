@@ -18,7 +18,7 @@ var Printer = {
 var Ajax = {
     encodePostParams: function(data) {
         return typeof data == 'string' ? data : Object.keys(data).map(
-            function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+            function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]); }
         ).join('&');
     },
     simpleSendRequest: function(params) {
@@ -81,5 +81,3 @@ window.addEventListener( "load", function() {
     console.log("init");
     CollectURLs.attachEvent("compare-trigger");
 }, true );
-
-

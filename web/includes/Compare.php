@@ -27,4 +27,7 @@ class Compare extends FindAttribute
     public function getArray2() {
         return $this->array_url2;
     }
+    public function getElementsInArrays( $key ) {
+        return [ $this->array_url1[ $key ], $this->array_url2[ $key ] ];
+    }
 }

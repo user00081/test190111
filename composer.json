@@ -5,6 +5,11 @@
     "twig/twig": "^2.0",
     "symfony/twig-bridge": "^3"
   },
+  "autoload": {
+        "classmap": [
+            "web/includes/"
+        ]
+    },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*",
     "phpunit/phpunit": "^7"

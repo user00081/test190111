@@ -19,11 +19,17 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
-  /*if ( isset($_POST['url1']) && isset($_POST['url2']) ) {
-        $content = 'processing.twig';
+  /*if ( isAjaxRequest() ) {
+      include_once 'includes/Compare.php';
+        $comp = new Compare('url1', 'url2');
+        $a1 = $comp->getArray1();
+        $a2 = $comp->getArray2();
+        //var_dump($comp->getArray1());
+        //var_dump($comp->getArray2());
+        $content = 'results.twig';
   } else {*/
         $content = 'index.twig';
- // }
+  //}
   return $app['twig']->render($content);
 });
 
