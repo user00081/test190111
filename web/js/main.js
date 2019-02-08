@@ -66,7 +66,6 @@ var CollectURLs = {
             var url2 = CollectURLs.getInputText("url2");
             if (CollectURLs.isURL(url1) && CollectURLs.isURL(url2)) {
                 e.preventDefault();
-                //Ajax.performRequest("url1="+url1+"&url2="+url2);
                 paramObj = { url1: url1, url2: url2 }
                 Ajax.performRequest(paramObj);
                 console.log("From CollectURLS.attachEvent(): url1="+url1+"&url2="+url2);
