@@ -26,7 +26,7 @@ var Ajax = {
     simpleSendRequest: function(params) {
         Printer.setTargetElement("results");
         var xhttp =  window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        xhttp.open("POST", "http://heroku.devel/endpoint.php", true);
+        xhttp.open("POST", this.endpoint, true);
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState>3 && xhttp.status==200) {
                 Printer.displayContent(xhttp.responseText);
@@ -40,6 +40,7 @@ var Ajax = {
     },
     performRequest: function(arr) {
         var encodedParams = this.encodePostParams(arr);
+        this.endpoint = "http://heroku.devel/endpoint.php";
         this.simpleSendRequest(encodedParams);
     }
 };
