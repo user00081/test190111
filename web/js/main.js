@@ -2,6 +2,7 @@ var Printer = {
     targetElementId: "",
     setTargetElement: function ( elementId ) {
         this.targetElementId = elementId;
+        this.displayWaiting();
     },
     displayWaiting: function() {
         document.getElementById(this.targetElementId).classList.add("waiting");
@@ -16,6 +17,7 @@ var Printer = {
 };
 
 var Ajax = {
+    endpoint: "",
     encodePostParams: function(data) {
         return typeof data == 'string' ? data : Object.keys(data).map(
             function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]); }
@@ -23,7 +25,6 @@ var Ajax = {
     },
     simpleSendRequest: function(params) {
         Printer.setTargetElement("results");
-        Printer.displayWaiting();
         var xhttp =  window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         xhttp.open("POST", "http://heroku.devel/endpoint.php", true);
         xhttp.onreadystatechange = function() {
@@ -66,7 +67,7 @@ var CollectURLs = {
             var url2 = CollectURLs.getInputText("url2");
             if (CollectURLs.isURL(url1) && CollectURLs.isURL(url2)) {
                 e.preventDefault();
-                paramObj = { url1: url1, url2: url2 }
+                paramObj = { url1: url1, url2: url2 };
                 Ajax.performRequest(paramObj);
                 console.log("From CollectURLS.attachEvent(): url1="+url1+"&url2="+url2);
             } else {

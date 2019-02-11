@@ -24,15 +24,19 @@ $app->get('/', function() use($app) {
   $vars = array(
       'isajax' => false
   );
-  if ( Router::varExists( 'url1' ) && Router::varExists( 'url2' ) ) {
+  $content = 'index.twig';
+  
+  if ( Router::varExists( 'url1' ) ) {
+      var_dump("url1 & url2 exists");
       $vars = array(
           'isajax' => true,
           'url1' => Router::listenPost( 'url1' ),
           'url2' => Router::listenPost( 'url2' )
       );
+      echo "HHHHHHHHHHHHHHHHHHHHHHHHHHHH";
+      die();
+      $content = 'c2.twig';
   } 
-  
-  $content = 'index.twig';
   
   return $app['twig']->render( $content , $vars );
 });

@@ -24,14 +24,19 @@ $url = $fh->getParamByProperty('url1');
 $href_list = $fh->attributeExtractor( $url );
 
 var_dump( $href_list );*/
+include_once 'includes/Router.php';
+if (Router::varExists('url1') && Router::varExists('url2')) {
+    
+    include_once 'includes/Compare.php';
+    $comp = new Compare( 'url1', 'url2' );
+    var_dump($comp->getArray1());
+    var_dump($comp->getArray2());
 
-include_once 'includes/Compare.php';
-$comp = new Compare( 'url1', 'url2' );
-var_dump($comp->getArray1());
-var_dump($comp->getArray2());
-
-include_once 'includes/LevenshteinDistance.php';
-$source = $comp->getElementsInArrays( 1 );
-var_dump( $source );
-$ld = new LevenshteinDistance( $source[0], $source[1] );
-var_dump( $ld );
+    include_once 'includes/LevenshteinDistance.php';
+    $source = $comp->getElementsInArrays( 1 );
+    var_dump( $source );
+    $ld = new LevenshteinDistance( $source[0], $source[1] );
+    var_dump( $ld );
+} else {
+    echo "No variables passed";
+}
