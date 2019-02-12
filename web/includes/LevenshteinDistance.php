@@ -65,29 +65,37 @@ class LevenshteinDistance
     }
     
     private function fillMatrix() {
+        var_dump("init iteration");
         for ( $i=1; $i<$this->source_length; $i++ ) {
             for ( $j=1; $j<$this->target_length; $j++ ) {
                 $this->matrix[$i][$j] = $this->computeMinimum( $i, $j );
             }
         }
+        var_dump("end iteration");
     }
     
     /*
      * array( cost, above current position, left of current position, above left of current position );
      * */
     private function computeInputParameters( $m, $n ) {
+        $cost = $this->computeCost( $m, $n );
         return [
             $this->computeTop( $m, $n ),
             $this->computeLeft( $m, $n ),
-            $this->computeDiag( $m, $n, $this->computeCost( $m, $n ) )
+            $this->computeDiag( $m, $n, $cost )
         ];
+    }
+    private function tryGetCharByMatrixPosition( $i, $j ) {
+        $this->source_string[$i] = ( $i < $this->source_length )?$this->source_string[$i]:null;
+        $this->target_string[$j] = ( $j < $this->target_length )?$this->target_string[$j]:null;
+        return [ $this->source_string[$i], $this->target_string[$j] ];
     }
     
     private function getCharsByMatrixPosition( $m, $n ) {
         return [ $this->source_string[$m], $this->target_string[$n] ];
     }
     private function computeCost( $m, $n ) {
-        $chars = $this->getCharsByMatrixPosition( $m, $n );
+        $chars = $this->tryGetCharByMatrixPosition( $m, $n );
         return ( $chars[0] === $chars[1] )?0:1;
     }
     private function computeTop( $m, $n ) {
