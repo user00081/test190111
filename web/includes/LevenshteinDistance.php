@@ -32,11 +32,22 @@ class LevenshteinDistance
     public function __construct( $source, $target ) {
         $this->source_string = $source;
         $this->target_string = $target;
-        $this->source_length = strlen( $source );
-        $this->target_length = strlen( $target );
+        $this->source_length = strlen( $source ); //n
+        $this->target_length = strlen( $target ); //m
         $this->matrix = array();
         $this->getLevenshteinDistance();
     }
+    
+    public function getLevenshteinDistance() {
+        if ( $this->source_length === 0 ) { // n === 0
+            $difference = $this->target_length;
+        } elseif ( $this->target_length === 0 ) { // m === 0
+            $difference = $this->source_length;
+        } else {
+            $difference = $this->initMatrix();
+        }
+        return $difference;
+    } 
     
     private function initMatrix() {
         $source_to = $this->source_length++;
@@ -44,32 +55,23 @@ class LevenshteinDistance
         for ( $i=0; $i<$source_to; $i++ ) {
             $this->matrix[0][$i] = $i;
         }
-        for ( $j=0; $j<$target_to; $j++ ) {
+        for ( $j=1; $j<$target_to; $j++ ) {
             $this->matrix[$j][0] = $j;
         }
+        var_dump( "init matrix looks like this:" );
         var_dump( $this->matrix );
         $this->fillMatrix();
         return $this->matrix[$i][$j];
     }
     
     private function fillMatrix() {
-        for ( $i=1; $i<$this->target_lenght; $i++ ) {
-            for ( $j=1; $j<$this->source_length; $i++ ) {
+        for ( $i=1; $i<$this->source_length; $i++ ) {
+            for ( $j=1; $j<$this->target_length; $j++ ) {
                 $this->matrix[$i][$j] = $this->computeMinimum( $i, $j );
             }
         }
     }
     
-    public function getLevenshteinDistance() {
-        if ( $this->source_length === 0 ) {
-            $difference = $this->target_length;
-        } elseif ( $this->target_length === 0 ) {
-            $difference = $this->source_length;
-        } else {
-            $difference = $this->initMatrix();
-        }
-        return $difference;
-    }
     /*
      * array( cost, above current position, left of current position, above left of current position );
      * */
