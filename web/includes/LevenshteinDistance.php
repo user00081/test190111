@@ -50,8 +50,8 @@ class LevenshteinDistance
     } 
     
     private function initMatrix() {
-        $source_to = $this->source_length++;
-        $target_to = $this->target_length++;
+        $source_to = $this->source_length+1;
+        $target_to = $this->target_length+1;
         for ( $i=0; $i<$source_to; $i++ ) {
             $this->matrix[0][$i] = $i;
         }
@@ -86,6 +86,8 @@ class LevenshteinDistance
         ];
     }
     private function tryGetCharByMatrixPosition( $i, $j ) {
+        /*var_dump( "i".$i );
+        var_dump( "j".$j );*/
         $this->source_string[$i] = ( $i < $this->source_length )?$this->source_string[$i]:null;
         $this->target_string[$j] = ( $j < $this->target_length )?$this->target_string[$j]:null;
         return [ $this->source_string[$i], $this->target_string[$j] ];
