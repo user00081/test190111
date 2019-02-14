@@ -37,6 +37,9 @@ if (Router::varExists('url1') && Router::varExists('url2')) {
     var_dump( $source );
     $ld = new LevenshteinDistance( $source[0], $source[1] );
     var_dump( $ld );
+    $strings = $ld->getStrings();
+    
+    
 } else {
     echo "No variables passed";
 }

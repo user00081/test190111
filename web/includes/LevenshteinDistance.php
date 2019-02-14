@@ -113,4 +113,10 @@ class LevenshteinDistance
         $input_parameters = $this->computeInputParameters( $m, $n );
         return min( $input_parameters );
     }
+    public function getMatrix() {
+        return $this->matrix;
+    }
+    public function getStrings() {
+        return [ $this->source_string, $this->target_string ];
+    }
 }
